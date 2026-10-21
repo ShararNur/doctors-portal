@@ -1,0 +1,16 @@
+.dashboard-sidebar-link {
+  transition:
+    background-color 160ms ease,
+    padding-left 160ms ease;
+}
+
+.dashboard-sidebar-link:hover,
+.dashboard-sidebar-link:focus-visible {
+  padding-left: 1.25rem;
+  background-color: rgb(255 255 255 / 18%);
+}
+
+.dashboard-sidebar-link:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}

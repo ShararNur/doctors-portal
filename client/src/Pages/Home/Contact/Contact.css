@@ -1,0 +1,16 @@
+.contact-container {
+  background-image: url('../../../assets/images/appointment-bg.png');
+  position: relative;
+  z-index: 1;
+}
+
+.contact-container::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3a4256;
+  opacity: 0.9;
+  z-index: -1;
+}
