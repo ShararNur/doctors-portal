@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+console.log('API_URL', API_URL);
+
 const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [summary, setSummary] = useState({
@@ -11,7 +15,7 @@ const Dashboard = () => {
   const [summaryError, setSummaryError] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/appointments')
+    fetch(`${API_URL}/api/appointments`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -27,7 +31,7 @@ const Dashboard = () => {
       tomorrowStart: tomorrowStart.toISOString(),
     });
 
-    fetch(`http://localhost:3000/api/dashboard-summary?${params}`)
+    fetch(`${API_URL}/api/dashboard-summary?${params}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to load dashboard summary');

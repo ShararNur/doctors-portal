@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const customStyles = {
   content: {
     top: '50%',
@@ -27,7 +29,7 @@ const AppointmentForm = ({ modalIsOpen, closeModal, appointmentOn, date }) => {
     data.date = date;
     data.created = new Date();
 
-    fetch('http://localhost:3000/api/addAppointment', {
+    fetch(`${API_URL}/api/addAppointment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

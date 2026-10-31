@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import AppointmentsByDate from './components/AppointmentsByDate/AppointmentsByDate';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const MyAppointment = () => {
   // const containerStyle = {
   //   backgroundColor: '#F4FDFB',
@@ -16,7 +18,7 @@ const MyAppointment = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/appointmentByDate', {
+    fetch(`${API_URL}/api/appointmentByDate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

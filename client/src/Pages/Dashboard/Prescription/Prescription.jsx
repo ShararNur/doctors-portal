@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Prescription = () => {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/appointments')
+    fetch(`${API_URL}/api/appointments`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           setAppointments(data.data);
+          ``;
         }
       });
   }, []);

@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import AppointmentDataTable from '../AppointmentDataTable/AppointmentDataTable';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Patient = () => {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/appointments')
+    fetch(`${API_URL}/api/appointments`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
