@@ -1,37 +1,36 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { createContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { auth } from '../firebase/firebase.config';
-
-export const AuthContext = createContext();
+import { AuthContext } from './AuthContext';
 
 const AuthProvider = ({ children }) => {
-  const [loggedInUser, setLoggedInUser] = useState({});
-  const navigate = useNavigate();
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
-        console.log('user', user);
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
         setLoggedInUser(user);
-        // ...
-      } else {
-        // User is signed out
-        sessionStorage.removeItem('token');
-        setLoggedInUser({});
-        navigate('/login');
+        setAuthLoading(false);
+
+        if (!user) {
+          sessionStorage.removeItem('token');
+        }
+      },
+      (error) => {
+        console.error('Failed to check authentication state:', error);
+        setAuthLoading(false);
       }
-    });
+    );
+
+    return unsubscribe;
   }, []);
 
   const logout = () => {
     signOut(auth)
       .then(() => {
         sessionStorage.removeItem('token');
-        setLoggedInUser({});
       })
       .catch((error) => {
         console.error('Failed to log out:', error);
@@ -39,7 +38,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loggedInUser, setLoggedInUser, logout }}>
+    <AuthContext.Provider
+      value={{ loggedInUser, setLoggedInUser, authLoading, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
