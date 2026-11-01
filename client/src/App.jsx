@@ -23,7 +23,7 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute from="/dashboard">
+            <PrivateRoute>
               <DashboardLayout />
             </PrivateRoute>
           }
